@@ -1,10 +1,10 @@
 package org.primefaces.steps;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.primefaces.pages.DataTableSelection;
 import org.primefaces.utility.BrowserUtil;
@@ -24,31 +24,30 @@ DataTableSelection dataTableSelection = new DataTableSelection();
         BrowserUtil.waitFor(2);
     }
 
-    @Then("I should be on the DataTable selection page")
-    public void i_should_be_on_the_data_table_selection_page() {
-        String pageTitle = Driver.getDriver().getTitle();
-        Assert.assertTrue("Not on the DataTable selection page", pageTitle.contains("DataTable - Selection"));
-    }
 
     @When("I scroll down until Checkbox selection")
     public void i_scroll_down_until_checkbox_selection() {
 
-       BrowserUtil.scrollToElement(dataTableSelection.checkbox);
+    BrowserUtil.scrollDown(250);
     }
 
 
-    @Then("I select the checkbox against the row with the name {string}")
-    public void i_select_the_checkbox_against_the_row_with_the_name(String string) {
-        dataTableSelection.blueBandCheckboxButton.click();
-    }
-    @Then("the checkbox for {string} should be selected")
-    public void the_checkbox_for_should_be_selected(boolean blueband) {
+    @And("I select the checkbox against the row with the name {string} in {string} section")
+    public void iSelectTheCheckboxAgainstTheRowWithTheNameInSection(String checkbox, String blueBand) {
 
-        BrowserUtil.selectCheckBox(dataTableSelection.checkbox,blueband );
-
-        //Second way to select the checkbox
-       // boolean isChecked = dataTableSelection.blueBandCheckboxButton.isSelected();
-       // Assert.assertTrue("Checkbox for 'Blue Band' is not selected", isChecked);
+        dataTableSelection.clickCheckbox(checkbox, blueBand);
 
     }
+
+
+    @And("the checkbox for Blue Band should be selected")
+    public void theCheckboxForBlueBandShouldBeSelected() {
+
+        // Verify if the checkbox is selected using assertion
+        Assert.assertTrue("checkbox is not selected",dataTableSelection.checkbox.isSelected());
+
+
+    }
+
 }
+

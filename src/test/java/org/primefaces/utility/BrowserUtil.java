@@ -327,6 +327,9 @@ public class BrowserUtil {
 
 
 
+    public static void scrollDown(int pixel){
+        executeJScommand("window.scrollBy(0,"+pixel+")");
+    }
 
 
 
